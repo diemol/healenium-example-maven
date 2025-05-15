@@ -20,10 +20,10 @@ public class DriverContext {
                 this.context = new LocalDriver();
                 break;
             case PROXY:
-                this.context = new ProxyDriver();
+                this.context = new ProxyDriver("http://localhost:8085");
                 break;
             case REMOTE:
-                this.context = new RemoteDriver();
+                this.context = new RemoteDriver("http://localhost:4444/wd/hub");
                 break;
         }
 

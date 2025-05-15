@@ -2,7 +2,6 @@ package com.epam.healenium.settings.drivers;
 
 import com.epam.healenium.SelfHealingDriver;
 import com.epam.healenium.settings.IDriverInterface;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -25,7 +24,6 @@ public class LocalDriver implements IDriverInterface {
 
     @Override
     public Object useChrome() {
-        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--user-data-dir=/tmp/unique-chrome-profile-" + System.currentTimeMillis());
         options.addArguments("--headless"); // Запуск в headless-режиме
@@ -37,9 +35,7 @@ public class LocalDriver implements IDriverInterface {
 
     @Override
     public Object useFirefox() {
-        WebDriverManager.firefoxdriver().setup();
         FirefoxOptions options = new FirefoxOptions();
-//        options.setHeadless(false);
 
         WebDriver delegate = new FirefoxDriver(options);
         return delegate;
@@ -47,7 +43,6 @@ public class LocalDriver implements IDriverInterface {
 
     @Override
     public Object useEdge() {
-        WebDriverManager.edgedriver().setup();
         EdgeOptions options = new EdgeOptions();
 
         WebDriver delegate = new EdgeDriver(options);

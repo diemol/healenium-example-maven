@@ -4,60 +4,47 @@ import com.epam.healenium.SelfHealingDriver;
 import com.epam.healenium.settings.IDriverInterface;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariOptions;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 
 public class RemoteDriver implements IDriverInterface {
 
-    private SelfHealingDriver driver;
+  private final String remoteWebDriverUrl;
+
+    public RemoteDriver(String remoteWebDriverUrl) {
+        this.remoteWebDriverUrl = remoteWebDriverUrl;
+    }
 
     @Override
     public WebDriver setDriver(Object capabilities) throws MalformedURLException {
-        RemoteWebDriver delegate = new RemoteWebDriver(
-                URI.create("http://" + SELENOID + ":4444/wd/hub").toURL(),
-                (Capabilities) capabilities
-        );
-        this.driver = SelfHealingDriver.create(delegate);
-
-        return this.driver;
+        RemoteWebDriver delegate = new RemoteWebDriver(URI.create(remoteWebDriverUrl).toURL(),
+                (Capabilities) capabilities);
+      return SelfHealingDriver.create(delegate);
     }
 
     @Override
     public Object useChrome() {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("browserName", "chrome");
-        capabilities.setCapability("enableVNC", true);
-
-        return capabilities;
+        return new ChromeOptions();
     }
 
     @Override
     public Object useFirefox() {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("browserName", "firefox");
-        capabilities.setCapability("enableVNC", true);
-
-        return capabilities;
+        return new FirefoxOptions();
     }
 
     @Override
     public Object useEdge() {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("browserName", "edge");
-        capabilities.setCapability("enableVNC", true);
-
-        return capabilities;
+        return new EdgeOptions();
     }
 
     @Override
     public Object useSafari() {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("browserName", "safari");
-        capabilities.setCapability("enableVNC", true);
-
-        return capabilities;
+        return new SafariOptions();
     }
 }

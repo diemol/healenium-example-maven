@@ -13,30 +13,31 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ProxyDriver implements IDriverInterface {
-    private RemoteWebDriver driver;
+
+  private final String proxyUrl;
+
+    public ProxyDriver(String url) {
+        this.proxyUrl = url;
+    }
 
     @Override
     public WebDriver setDriver(Object options) throws MalformedURLException {
-        this.driver = new RemoteWebDriver(new URL("http://" + LOCALHOST + ":8085"), (Capabilities) options);
-        return this.driver;
+      return new RemoteWebDriver(new URL(proxyUrl), (Capabilities) options);
     }
 
     @Override
     public Object useChrome() {
-        ChromeOptions options = new ChromeOptions();
-        return options;
+      return new ChromeOptions();
     }
 
     @Override
     public Object useFirefox() {
-        FirefoxOptions options = new FirefoxOptions();
-        return options;
+      return new FirefoxOptions();
     }
 
     @Override
     public Object useSafari() {
-        SafariOptions options = new SafariOptions();
-        return options;
+      return new SafariOptions();
     }
 
     @Override
@@ -44,7 +45,6 @@ public class ProxyDriver implements IDriverInterface {
         EdgeOptions options = new EdgeOptions();
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-
         return options;
     }
 }
