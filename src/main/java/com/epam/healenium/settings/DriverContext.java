@@ -23,7 +23,13 @@ public class DriverContext {
                 this.context = new ProxyDriver("http://localhost:8085");
                 break;
             case REMOTE:
-                this.context = new RemoteDriver("http://localhost:4444/wd/hub");
+                // Get Sauce Labs username and access key from environment variables
+                String username = System.getenv("SAUCE_USERNAME");
+                String accessKey = System.getenv("SAUCE_ACCESS_KEY");
+                // Set the Sauce Labs URL
+                String sauceUrl = "https://" + username + ":" + accessKey +
+                                  "@ondemand.us-west-1.saucelabs.com:443/wd/hub";
+                this.context = new RemoteDriver(sauceUrl);
                 break;
         }
 

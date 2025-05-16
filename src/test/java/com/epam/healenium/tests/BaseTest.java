@@ -21,7 +21,7 @@ public class BaseTest {
 
     @BeforeAll
     static public void setUp() throws MalformedURLException {
-        driver = new DriverContext(DriverType.LOCAL).getDriver(BrowserType.CHROME);
+        driver = new DriverContext(DriverType.REMOTE).getDriver(BrowserType.CHROME);
 
         driver.manage().window().setSize(new Dimension(1200, 800));
 
@@ -34,9 +34,4 @@ public class BaseTest {
             driver.quit();
         }
     }
-
-//    @Attachment(value = "Screenshot", type = "image/png")
-//    public byte[] screenshot() {
-//        return ((TakesScreenshot) ((SelfHealingDriver) driver).getDelegate()).getScreenshotAs(OutputType.BYTES);
-//    }
 }
